@@ -36,7 +36,7 @@ const getTourById = async (req, res) => {
         const tour = tours[id];
 
         if (id > tours.length - 1) {
-            handleHttpError(res, "ID out of range", 404, "deleteTour")
+            handleHttpError(res, "ID Out of Range", 404, "deleteTour")
             return;
         }
 
@@ -84,6 +84,50 @@ const createTour = async (req, res) => {
 }
 
 /**
+ * Update tour by id
+ * @param {*} req
+ * @param {*} res
+ */
+const updateTour = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const tours = JSON.parse(fs.readFileSync(`${process.cwd()}/src/dev-data/data/tours-simple.json`));
+        const tourKeys = Object.keys(tours[id]);
+
+        if (Object.keys(req.body).length === 0 && req.body.constructor === Object) {
+            handleHttpError(res, "Bad Request", 400, "updateTour", "Empty body");
+            return;
+        }
+
+        const containsAll = Object.keys(req.body).every(element => {
+                return tourKeys.includes(element);
+            });
+
+        if (!containsAll) {
+            handleHttpError(res, "Bad Request", 400, "updateTour", "Some keys dont exist in object");
+            return;
+        }
+
+        Object.keys(req.body).every(element => {
+                tours[id][element] = req.body[element];
+            });
+        
+        fs.writeFileSync(`${process.cwd()}/src/dev-data/data/tours-simple.json`, JSON.stringify(tours))
+
+        res
+            .status(200)
+            .json({
+                succes: true,
+                message: "Tour updated",
+                data: tours[id]
+            });
+
+    } catch (error) {
+        handleHttpError(res, "Internal Server Error", 500, "updateTour", error)
+    }
+}
+
+/**
  * Delete tour by id
  * @param {*} req
  * @param {*} res
@@ -94,7 +138,7 @@ const deleteTour = async (req, res) => {
         const tours = JSON.parse(fs.readFileSync(`${process.cwd()}/src/dev-data/data/tours-simple.json`));
 
         if (id > tours.length - 1) {
-            handleHttpError(res, "ID out of range", 404, "deleteTour")
+            handleHttpError(res, "ID Out of Range", 404, "deleteTour")
             return;
         }
 
@@ -124,5 +168,6 @@ module.exports = {
     getAllTours,
     getTourById,
     createTour,
+    updateTour,
     deleteTour
 }

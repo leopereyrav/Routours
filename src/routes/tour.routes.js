@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const {getAllTours, getTourById, createTour, deleteTour} = require('../controllers/tours.controller');
+const {getAllTours, getTourById, createTour, updateTour, deleteTour} = require('../controllers/tours.controller');
 
 const router = Router();
 
@@ -17,6 +17,11 @@ router.get('/:id', getTourById);
  * Create new tour
  */
 router.post('/', createTour);
+
+/**
+ * Update tour by id
+ */
+router.put('/:id', updateTour);
 
 /**
  * Delete tour by id
