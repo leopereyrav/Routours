@@ -1,0 +1,25 @@
+{
+  "name": "routours",
+  "version": "1.0.0",
+  "description": "Learning NodeJS, Express and MongoDB",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Leonardo Pereyra",
+  "license": "ISC",
+  "dependencies": {
+    "@colors/colors": "^1.5.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
