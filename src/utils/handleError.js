@@ -7,7 +7,8 @@ const handleHttpError = (res, msg= 'An Error Ocurred', code = 500, nameFunction 
     .status(code)
     .json({
       success: false,
-      error: msg
+      error: msg,
+      errorData: error 
     });
 }
 
